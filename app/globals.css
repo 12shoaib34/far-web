@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,15 +9,98 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  font-family: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply antialiased text-foreground bg-background text-sm;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  h4 {
+    @apply text-lg;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .far-btn {
+    @apply active:opacity-100 hover:opacity-70 px-4 h-10 rounded-md text-sm font-medium;
+  }
+
+  .far-btn.lg {
+    @apply py-3 px-6 rounded-md;
+  }
+
+  .far-btn.primary {
+    @apply bg-primary text-white;
+  }
+
+  .far-btn.secondary {
+    @apply bg-secondary text-white;
+  }
+
+  .far-btn.tertiary {
+    @apply bg-tertiary text-primary;
+  }
+  .far-btn.disabled {
+    @apply bg-gray-200 text-gray-400 cursor-not-allowed hover:opacity-100;
+  }
+
+  .far-btn.outline-tertiary {
+    @apply bg-transparent border text-primary;
+  }
+  .far-btn.outline-gray {
+    @apply bg-transparent border text-gray-600;
+  }
+}
+
+@layer utilities {
+  .far-container {
+    @apply max-w-6xl mx-auto px-4;
+  }
+
+  .font-thin {
+    font-weight: 100;
+  }
+
+  .font-extraLight {
+    font-weight: 200;
+  }
+
+  .font-light {
+    font-weight: 300;
+  }
+
+  .font-regular {
+    font-weight: 400;
+  }
+
+  .font-medium {
+    font-weight: 500;
+  }
+
+  .font-semibold {
+    font-weight: 600;
+  }
+
+  .font-bold {
+    font-weight: 700;
+  }
+
+  .font-extraBold {
+    font-weight: 800;
+  }
 }
