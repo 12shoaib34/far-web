@@ -37,7 +37,7 @@ body {
 
 @layer components {
   .far-btn {
-    @apply active:opacity-100 hover:opacity-70 px-4 h-10 rounded-md text-sm font-medium;
+    @apply active:opacity-100 hover:opacity-70 px-6 h-10 rounded-lg text-base font-medium;
   }
 
   .far-btn.lg {
@@ -56,7 +56,7 @@ body {
     @apply bg-tertiary text-primary;
   }
   .far-btn.disabled {
-    @apply bg-gray-200 text-gray-400 cursor-not-allowed hover:opacity-100;
+    @apply bg-gray-200 text-gray-400 cursor-not-allowed opacity-50 hover:opacity-50;
   }
 
   .far-btn.outline-tertiary {

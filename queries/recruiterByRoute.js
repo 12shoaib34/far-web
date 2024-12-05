@@ -1,19 +1,10 @@
-export const getRecruiters = async (filters) => {
+export const getRecruitersByRoute = async (filters) => {
   const baseUrl = "https://api.findrecruiters.com/graphql";
   const query = `
-      query searchExtractedRecruitersByPagination (
-         $pageNumber: Int
-         $industrySpecialisationIds: [Int!]
-         $search: String
-      ) {
-        searchExtractedRecruitersByPagination (
-          pageNumber: $pageNumber
-          industrySpecialisationIds: $industrySpecialisationIds
-          search: $search
+        query getExtractedRecruiterByRoute (
+          $route: String!
         ) {
-          pages
-          count
-          data {
+          getExtractedRecruiterByRoute (route: $route) {
             id
             name
             website
@@ -30,18 +21,17 @@ export const getRecruiters = async (filters) => {
             countryId
             route
             openingHours {
-              weekday_text
+                weekday_text
             }
             IndustrySpecialisationOnExtractedRecruiter {
-              industrySpecialisationId
-              IndustrySpecialisation {
+                industrySpecialisationId
+                IndustrySpecialisation {
                 name
-              }
+             }
             }
-          }
+         }
         }
-      }
-    `;
+      `;
   try {
     const response = await fetch(baseUrl, {
       method: "POST",
@@ -60,7 +50,9 @@ export const getRecruiters = async (filters) => {
 
     const result = await response.json();
 
-    return result?.data?.searchExtractedRecruitersByPagination || null;
+    console.log(result);
+
+    return result?.data?.getExtractedRecruiterByRoute || null;
   } catch (error) {
     console.error("Error fetching data:", error);
     return null;

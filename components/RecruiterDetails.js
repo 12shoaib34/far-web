@@ -2,55 +2,63 @@
 
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import { RiUser6Line } from "react-icons/ri";
+import Drawer from "./Drawer";
+import { useState } from "react";
 
 const RecruiterDetails = (props) => {
   const { data } = props;
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { push, replace } = useRouter();
 
-  const onView = (data) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("area", data?.area);
-    params.set("name", data?.name);
-    params.set("id", data?.id);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-    replace(`${pathname}?${params.toString()}`);
-  };
+  const { replace } = useRouter();
+
+  const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
   return (
-    <div className="grid grid-cols-8 gap-12 items-start mb-6">
-      <div className="flex items-center gap-2 col-span-3">
-        <Image
-          className="object-cover rounded-full"
-          src={
-            data?.image ||
-            "https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1"
-          }
-          alt={`Logo of ${data?.name}`}
-          width={36}
-          height={36}
-        />
-        <div className="leading-none">
-          <h2 className="relative line-clamp-3 leading-1 font-semibold text-sm mb-0">{data?.name}</h2>
-          <span className="text-xs text-gray-600 font-medium">Agency</span>
-        </div>
-      </div>
-      <div className="flex items-center gap-1 col-span-2">
-        <Image src={"/icons/map-marker-primary.svg"} alt="location" width={20} height={20} />
-        {data?.area}
-      </div>
-      <div className="flex items-center gap-1 col-span-2">
-        <Image src={"/icons/peoples-primary.svg"} alt="employees" width={20} height={20} />5 employees
-      </div>
-      <div className="ml-auto">
-        <button onClick={() => onView(data)} className="far-btn md font-medium outline-tertiary">
-          View
-        </button>
-      </div>
-    </div>
+    <>
+      <tr className="border-b">
+        <td className="py-2">
+          <div className="flex items-center gap-2 col-span-3">
+            {data?.logo ? (
+              <div className="relative h-14 w-14 overflow-hidden rounded-full bg-gray-100">
+                <Image className="object-contain" priority src={data?.logo} alt={`Logo of ${data?.name}`} layout="fill" />
+              </div>
+            ) : (
+              <div className="h-14 w-14 rounded-full bg-gray-100 border flex items-center justify-center text-3xl text-gray-400">
+                <RiUser6Line />
+              </div>
+            )}
+            <div className="leading-none">
+              <h2 className="relative line-clamp-3 leading-1 font-semibold text-sm mb-0">{data?.name}</h2>
+              <span className="text-xs text-gray-600 font-medium">Agency</span>
+            </div>
+          </div>
+        </td>
+        <td className="py-2">
+          <div className="flex items-center gap-1 col-span-2">
+            <Image src={"/icons/map-marker-primary.svg"} alt="location" width={20} height={20} />
+            {data?.area}
+          </div>
+        </td>
+        <td className="py-2">
+          <div className="flex items-center gap-1 col-span-2">
+            <Image src={"/icons/peoples-primary.svg"} alt="employees" width={20} height={20} />5 employees
+          </div>
+        </td>
+        <td className="py-2">
+          <div className="flex justify-end">
+            <button onClick={toggleDrawer} className="far-btn md font-medium outline-tertiary">
+              View
+            </button>
+          </div>
+        </td>
+      </tr>
+      {/* <Drawer data={data} open={isDrawerOpen} onClose={toggleDrawer} /> */}
+    </>
   );
 };
 

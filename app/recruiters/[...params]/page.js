@@ -1,25 +1,22 @@
 import { RecruiterDetails } from "@/components";
 import RecruiterPagination from "@/components/RecruiterPagination";
+import { getRecruitersByRoute } from "@/queries/recruiterByRoute";
 import { getRecruiters } from "@/queries/recruiters";
-import Image from "next/image";
 
 export default async function Page(props) {
-  const searchParams = await props.searchParams;
-  const filters = {
-    pageNumber: +searchParams?.page || 1,
-  };
+  const { params } = await props.params;
 
-  const data = await getRecruiters(filters);
+  const route = `${params?.[0]}/${params?.[1]}`;
+
+  const data = await getRecruitersByRoute({ route });
 
   return (
     <div>
       <div className="far-container py-12">
         <h1 className="text-lg font-medium mb-8">{`${data?.count || 0} Recruiters found`}</h1>
         <table className="w-full">
-          <tbody>
-            {data?.data?.map((agency, index) => (
-              <RecruiterDetails data={agency} key={index} />
-            ))}
+          <tbody className="w-full">
+            <RecruiterDetails data={data} />
           </tbody>
         </table>
         {data?.count > 1 && <RecruiterPagination totalPages={data?.pages} totalCount={data?.count} />}
