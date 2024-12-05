@@ -20,7 +20,7 @@ const RecruiterDetails = (props) => {
 
   return (
     <>
-      <tr className="border-b">
+      <tr className="border-b last:border-none">
         <td className="py-2">
           <div className="flex items-center gap-2 col-span-3">
             {data?.logo ? (
