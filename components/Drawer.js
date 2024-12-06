@@ -1,43 +1,48 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Drawer = (props) => {
-  const { open, onClose, width = 540 } = props;
+  const { open, onClose, width = 540, title, children } = props;
+
+  const [isOpen, setIsOpen] = useState(open);
+  const drawerRef = useRef();
+  const overlayRef = useRef();
 
   useEffect(() => {
     if (open) {
-      // Disable scrolling on the body
-      document.body.style.overflow = "hidden";
+      setIsOpen(true);
     } else {
-      // Re-enable scrolling on the body
-      document.body.style.overflow = "";
-    }
+      if (!drawerRef.current || !overlayRef.current) return;
+      drawerRef.current.classList.add("animate-slide-out");
+      overlayRef.current.classList.add("animate-fade-out");
 
-    // Cleanup on unmount or when the drawer is closed
-    return () => {
-      document.body.style.overflow = "";
-    };
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        drawerRef.current.classList.remove("animate-slide-out");
+        overlayRef.current.classList.remove("animate-fade-out");
+      }, 250);
+      return () => clearTimeout(timer);
+    }
   }, [open]);
 
-  if (!open) {
-    return null; // Don't render the drawer if it's not open
-  }
-
   return (
-    <div
-      className="fixed w-full h-[100svh] right-0 top-0 z-50 bg-black bg-opacity-20 overflow-hidden"
-      onClick={onClose} // Close the drawer when clicking outside
-    >
-      <div
-        style={{
-          maxWidth: `${width}px`,
-        }}
-        className="fixed w-full h-[100svh] right-0 top-0 z-50 bg-white overflow-y-auto"
-        onClick={(e) => e.stopPropagation()} // Prevent clicks inside the drawer from closing it
-      >
-        {/* Drawer content goes here */}
+    isOpen && (
+      <div className="fixed w-full h-full left-0 top-0 z-50">
+        <div onClick={onClose} ref={overlayRef} className="bg-black bg-opacity-80 absolute w-full h-full animate-fade-in"></div>
+        <div
+          ref={drawerRef}
+          style={{
+            maxWidth: `${width}px`,
+          }}
+          className="fixed w-full h-[100svh] right-0 top-0 z-50 bg-white overflow-hidden duration-300 animate-slide-in flex flex-col"
+        >
+          <div className="p-4 border-b">
+            <h1 className="text-lg font-medium">{title}</h1>
+          </div>
+          {children}
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

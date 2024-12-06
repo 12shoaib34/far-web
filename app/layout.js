@@ -9,10 +9,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
+      <body className={`antialiased h-[100svh] flex flex-col overflow-hidden`}>
         <Header />
-        <main className="min-h-[100svh]">{children}</main>
-        <Footer />
+        <div className="overflow-auto flex-grow flex flex-col">
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

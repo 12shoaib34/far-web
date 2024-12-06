@@ -12,6 +12,7 @@ export default async function Home(props) {
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="far-container py-12">
+        <h1 className="text-center mb-4 font-medium">Find A Recruiter</h1>
         <UniversalSearch data={data} />
       </div>
       ;

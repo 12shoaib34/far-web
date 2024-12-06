@@ -23,12 +23,14 @@ export const getRecruiters = async (filters) => {
             businessStatus
             phoneNumber
             experience
-            formattedAddress
             lat
             lng
             logo
             countryId
             route
+            metaTitle
+            metaDescription
+            formattedAddress
             openingHours {
               weekday_text
             }

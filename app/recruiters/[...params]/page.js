@@ -1,13 +1,13 @@
 import { RecruiterDetails } from "@/components";
-import RecruiterPagination from "@/components/RecruiterPagination";
 import { getRecruitersByRoute } from "@/queries/recruiterByRoute";
-import { getRecruiters } from "@/queries/recruiters";
 
 export default async function Page(props) {
   const { params } = await props.params;
 
   const route = `${params?.[0]}/${params?.[1]}`;
   const data = await getRecruitersByRoute({ route });
+
+  console.log(data);
 
   return (
     <div>
@@ -17,8 +17,23 @@ export default async function Page(props) {
             <RecruiterDetails data={data} />
           </tbody>
         </table>
-        {data?.count > 1 && <RecruiterPagination totalPages={data?.pages} totalCount={data?.count} />}
       </div>
     </div>
   );
+}
+
+export async function generateMetadata({ params, searchParams }, parent) {
+  const getPrams = await params?.params;
+  const route = `${getPrams?.[0]}/${getPrams?.[1]}`;
+  const data = await getRecruitersByRoute({ route });
+
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: data?.metaTitle || data?.name,
+    description: data?.metaDescription || "",
+    openGraph: {
+      images: [data?.logo, ...previousImages],
+    },
+  };
 }

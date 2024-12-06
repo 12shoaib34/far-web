@@ -1,21 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { RiUser6Line } from "react-icons/ri";
-import Drawer from "./Drawer";
 import { useState } from "react";
+import { RiUser6Line } from "react-icons/ri";
+import RecruiterDetailsDrawer from "./RecruiterDetailsDrawer";
 
 const RecruiterDetails = (props) => {
   const { data } = props;
 
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const { replace } = useRouter();
-
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
   return (
@@ -55,9 +48,9 @@ const RecruiterDetails = (props) => {
               View
             </button>
           </div>
+          <RecruiterDetailsDrawer data={data} open={isDrawerOpen} onClose={toggleDrawer} />
         </td>
       </tr>
-      {/* <Drawer data={data} open={isDrawerOpen} onClose={toggleDrawer} /> */}
     </>
   );
 };

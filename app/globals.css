@@ -65,6 +65,13 @@ body {
   .far-btn.outline-gray {
     @apply bg-transparent border text-gray-600;
   }
+
+  .far-btn-link {
+    @apply active:opacity-100 hover:opacity-70 text-base font-medium;
+  }
+  .far-btn-link.primary {
+    @apply text-primary underline;
+  }
 }
 
 @layer utilities {

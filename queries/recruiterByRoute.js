@@ -15,6 +15,8 @@ export const getRecruitersByRoute = async (filters) => {
             phoneNumber
             experience
             formattedAddress
+            metaTitle
+            metaDescription
             lat
             lng
             logo
@@ -49,8 +51,6 @@ export const getRecruitersByRoute = async (filters) => {
     }
 
     const result = await response.json();
-
-    console.log(result);
 
     return result?.data?.getExtractedRecruiterByRoute || null;
   } catch (error) {
